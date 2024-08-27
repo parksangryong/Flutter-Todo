@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todayey/components/tasks_list.dart';
+import 'package:todayey/screens/add_task_screen.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
@@ -8,7 +10,17 @@ class TaskScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.lightBlueAccent,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) => SingleChildScrollView(
+                        child: Container(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: AddTaskScreen(),
+                    )));
+          },
           backgroundColor: Colors.lightBlueAccent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
@@ -55,13 +67,14 @@ class TaskScreen extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height: 300,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(30),
-                        topLeft: Radius.circular(30))),
-              ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(30),
+                          topLeft: Radius.circular(30))),
+                  child: TasksList()),
             ),
           ]),
         ));
