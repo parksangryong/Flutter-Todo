@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todayey/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
+  late String newTaskTitle = "";
+
+  AddTaskScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,11 +25,14 @@ class AddTaskScreen extends StatelessWidget {
               style: TextStyle(fontSize: 30, color: Colors.lightBlueAccent),
               textAlign: TextAlign.center,
             ),
-            const TextField(
+            TextField(
               autofocus: true,
+              onChanged: (newValue) {
+                newTaskTitle = newValue;
+              },
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-              decoration: InputDecoration(
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+              decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(
                       borderSide:
                           BorderSide(color: Colors.lightBlueAccent, width: 2))),
@@ -33,8 +42,14 @@ class AddTaskScreen extends StatelessWidget {
             ),
             MaterialButton(
               height: 45,
-              onPressed: () {},
               color: Colors.lightBlueAccent,
+              onPressed: () {
+                final task = newTaskTitle == ""
+                    ?  "내용 없음"
+                    : newTaskTitle;
+                context.read<TaskData>().addTask(task);
+                Navigator.pop(context);
+              },
               child: const Text(
                 "Add",
                 style: TextStyle(color: Colors.white, fontSize: 20),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todayey/components/tasks_tile.dart';
-
-import '../models/task.dart';
+import 'package:todayey/models/task_data.dart';
 
 class TasksList extends StatefulWidget {
   @override
@@ -9,26 +9,24 @@ class TasksList extends StatefulWidget {
 }
 
 class _TasksListState extends State<TasksList> {
-  List<Task> tasks = [
-    Task(name: 'Buy Milk'),
-    Task(name: 'Buy Apple'),
-    Task(name: 'Buy Pen'),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (context, index) {
-          return TasksTile(
-            taskTitle: tasks[index].name,
-            isChecked: tasks[index].isDone,
-            checkboxCallback: (checkboxState){
-              setState(() {
-                tasks[index].toggleDone();
-              });
-            },
-          );
-        });
+    return Consumer<TaskData>(builder: (context, taskData, child) {
+      return ListView.builder(
+          itemCount: taskData.tasks.length,
+          itemBuilder: (context, index) {
+            final task = taskData.tasks[index];
+            return TasksTile(
+              taskTitle: task.name,
+              isChecked: task.isDone,
+              checkboxCallback: (checkboxState) {
+                taskData.updateTask(task);
+              },
+              deleteTile: () {
+                taskData.deleteTask(task);
+              },
+            );
+          });
+    });
   }
 }

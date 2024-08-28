@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todayey/components/tasks_list.dart';
+import 'package:todayey/models/task_data.dart';
 import 'package:todayey/screens/add_task_screen.dart';
 
-class TaskScreen extends StatelessWidget {
-  const TaskScreen({super.key});
+class TaskScreen extends StatefulWidget {
+  @override
+  State<TaskScreen> createState() => _TaskScreenState();
+}
+
+class _TaskScreenState extends State<TaskScreen> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +40,13 @@ class TaskScreen extends StatelessWidget {
         body: SafeArea(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Padding(
+             Padding(
               padding:
-                  EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
+                  const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 30,
                     child: Icon(
@@ -48,10 +55,10 @@ class TaskScreen extends StatelessWidget {
                       size: 30,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     'Todoey',
                     style: TextStyle(
                         color: Colors.white,
@@ -59,8 +66,8 @@ class TaskScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    '12 Tasks',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    '${context.read<TaskData>().TaskCount.toString()} Tasks',
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ],
               ),
@@ -74,7 +81,7 @@ class TaskScreen extends StatelessWidget {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(30),
                           topLeft: Radius.circular(30))),
-                  child: TasksList()),
+                  child: TasksList(),)
             ),
           ]),
         ));
