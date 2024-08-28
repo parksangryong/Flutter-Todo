@@ -23,7 +23,27 @@ class _TasksListState extends State<TasksList> {
                 taskData.updateTask(task);
               },
               deleteTile: () {
-                taskData.deleteTask(task);
+                showDialog(context: context, builder: (_){
+                  return SimpleDialog(
+                    title: const Text("삭제 하시겠습니까?"),
+                    children: [
+                      SimpleDialogOption(
+                        onPressed: (){
+                          taskData.deleteTask(task);
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('네', style: TextStyle(color: Colors.red),),
+                      ),
+                      SimpleDialogOption(
+                        onPressed: (){
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('아니오', style: TextStyle(color: Colors.blue),),
+                      )
+                    ],
+                  );
+                });
+
               },
             );
           });
